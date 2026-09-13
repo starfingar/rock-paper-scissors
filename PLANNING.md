@@ -14,7 +14,7 @@ Desenvolver um jogo interativo de Pedra, Papel e Tesoura para navegador, onde o 
 - [x] Fase 1: Gerar a escolha aleatória do computador
 - [x] Fase 2: Determinar o vencedor de uma única rodada
 - [x] Fase 3: Gerenciar a pontuação e o limite de rodada
-- [X] Fase 4: Criar a interface visual(HTML/CSS) e conectar o botão ao JS
+- [ ] Fase 4: Criar a interface visual(HTML/CSS) e conectar o botão ao JS
 
 ---
 
@@ -101,7 +101,7 @@ Função playRound(userChoice, computerChoice)
   SENÃO
     Retornar 'O computador venceu a rodada!'
   FimSe
-FimFunção
+FimFuncao
 
 Função playGame()
   userScore = 0
@@ -121,7 +121,7 @@ Função playGame()
     Exibir "Placar atual: Você " + userScore + " X " + computerScore + " Computador"
   FimPara
 
-  Exibir "--- FIM DO JOGO ---"
+  Exibir
   SE userScore > computerScore ENTÃO
     Exibir "Parabéns! Você venceu a partida!"
   SENÃO SE computerScore > userScore ENTÃO
