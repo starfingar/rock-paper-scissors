@@ -1,5 +1,3 @@
-const btnPlay = document.querySelector('.btn-play');
-
 function getComputerChoice() {
   let randomNumber = Math.floor(Math.random() * 3);
 
@@ -58,8 +56,3 @@ function playGame() {
     return 'A partida terminou em empate!';
   }
 }
-
-btnPlay.addEventListener('click', () => {
-  console.log('INICIANDO PARTIDA DE 5 RODADAS...');
-  console.log(playGame());
-});
