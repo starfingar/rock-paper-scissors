@@ -1,58 +1,56 @@
+let userScore = 0;
+let computerScore = 0;
+
+const divResultado = document.querySelector('#resultado');
+const divPlacar = document.querySelector('#placar');
+const botoes = document.querySelectorAll('button');
+
 function getComputerChoice() {
-  let randomNumber = Math.floor(Math.random() * 3);
+  const escolhas = ['pedra', 'papel', 'tesoura'];
+  const indice = Math.floor(Math.random() * 3);
+  return escolhas[indice];
+}
 
-  if (randomNumber === 0) {
-    return 'pedra';
-  } else if (randomNumber === 1) {
-    return 'papel';
-  } else {
-    return 'tesoura';
+function playRound(playerSelection, computerSelection) {
+  if (playerSelection === computerSelection) {
+    return `Empate! Ambos escolheram ${playerSelection}.`;
   }
-}
 
-function getUserChoice() {
-  let userChoice = prompt('Escolha entre pedra, papel ou tesoura').toLowerCase();
-
-  return userChoice;
-}
-
-function playRound(userChoice, computerChoice) {
-  if (userChoice === computerChoice) {
-    return 'Empate';
-  } else if (
-    (userChoice === 'pedra' && computerChoice === 'tesoura') ||
-    (userChoice === 'papel' && computerChoice === 'pedra') ||
-    (userChoice === 'tesoura' && computerChoice === 'papel')
+  if (
+    (playerSelection === 'pedra' && computerSelection === 'tesoura') ||
+    (playerSelection === 'papel' && computerSelection === 'pedra') ||
+    (playerSelection === 'tesoura' && computerSelection === 'papel')
   ) {
-    return 'Você venceu a rodada!';
+    userScore++;
+    return `Você venceu a rodada! ${playerSelection} vence ${computerSelection}.`;
   } else {
-    return 'O computador venceu a rodada!';
+    computerScore++;
+    return `O computador venceu a rodada! ${computerSelection} vence ${playerSelection}.`;
   }
 }
 
-function playGame() {
-  let userScore = 0;
-  let computerScore = 0;
-
-  for (let i = 1; i <= 5; i++) {
-    let usuario = getUserChoice();
-    let computador = getComputerChoice();
-    let resultado = playRound(usuario, computador);
-
-    console.log(`Rodada ${i}: Você escolheu ${usuario} e o computador escolheu ${computador}. Resultado: ${resultado}`);
-
-    if (resultado === 'Você venceu a rodada!') {
-      userScore += 1;
-    } else if (resultado === 'O computador venceu a rodada!') {
-      computerScore += 1;
+function checarFimDeJogo() {
+  if (userScore === 5 || computerScore === 5) {
+    if (userScore === 5) {
+      divResultado.textContent = 'Você atingiu 5 pontos e venceu o jogo!';
+    } else {
+      divResultado.textContent = 'O computador atingiu 5 pontos e venceu.';
     }
-  }
 
-  if (userScore > computerScore) {
-    return 'Você venceu o jogo!';
-  } else if (computerScore > userScore) {
-    return 'O computador venceu o jogo!';
-  } else {
-    return 'A partida terminou em empate!';
+    botoes.forEach(botao => botao.disabled = true);
   }
 }
+
+botoes.forEach(botao => {
+  botao.addEventListener('click', () => {
+    const playerSelection = botao.id;
+    const computerSelection = getComputerChoice();
+    
+    const textoRodada = playRound(playerSelection, computerSelection);
+    
+    divResultado.textContent = textoRodada;
+    divPlacar.textContent = `Jogador: ${userScore} | Computador: ${computerScore}`;
+    
+    checarFimDeJogo();
+  });
+});
